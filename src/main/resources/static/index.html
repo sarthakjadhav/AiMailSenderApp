@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Sender App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h3>📧 Send Email</h3>
+
+    <input type="email" id="email" placeholder="Recipient Email" required />
+    <input type="text" id="company" placeholder="Company Name" required />
+    <input type="text" id="position" placeholder="Position Applied For" required />
+
+    <button onclick="sendMail()">Send</button>
+    <div class="status" id="status"></div>
+
+</div>
+
+
+<script>
+    function sendMail() {
+
+        const email = document.getElementById("email").value;
+        const company = document.getElementById("company").value;
+        const position = document.getElementById("position").value;
+        const status = document.getElementById("status");
+
+        if (!email || !company || !position) {
+            status.innerText = "❌ All fields are required";
+            return;
+        }
+
+        status.innerText = "⏳ Sending...";
+
+        fetch("/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "true"
+            },
+            body: JSON.stringify({
+                to: email,
+                company: company,
+                position: position
+            })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error();
+            return res.text();
+        })
+        .then(() => status.innerText = "✅ Email sent successfully")
+        .catch(() => status.innerText = "❌ Failed to send email");
+    }
+
+
+</script>
+
+</body>
+</html>
