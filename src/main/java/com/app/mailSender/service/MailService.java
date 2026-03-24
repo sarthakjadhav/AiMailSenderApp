@@ -25,7 +25,7 @@ public class MailService {
             System.out.println("👉 Calling AI Service...");
             String body = aiService.generateEmail(to,company, position);
             System.out.println("👉 FINAL EMAIL BODY:\n" + body);
-            String contact = "\nMobile: +91 9421947067\nEmail: ssatishjadhav1@gmail.com\nCurrent salary: 5.5 LPA + Allowances\nExpected Salary: 12 LPA\n Notice period: 60 days (Negotiable and buy option available)\n";
+            String contact = "\nMobile: +91 9421947067\nEmail: ssatishjadhav1@gmail.com\n Notice period: 60 days (Negotiable and buy option available)\n";
 
             body += "\n"+contact;
             MimeMessage message = mailSender.createMimeMessage();
