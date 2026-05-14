@@ -127,7 +127,7 @@ If AI fails:
 
 ## 👨‍💻 Author
 
-Jayesh Rathi  
+  Sarthak Jadhav
 
 ---
 
